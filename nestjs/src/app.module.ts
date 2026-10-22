@@ -2,6 +2,12 @@ import { Module } from '@nestjs/common';
 import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { AuthModule } from './auth/auth.module.js';
+import { HelloModule } from './hello/hello.module.js';
+import {MongooseModule} from "@nestjs/mongoose";
+import { ConfigModule } from '@nestjs/config';
+
+
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -14,6 +20,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'nestjs',
     }),
+    AuthModule,
+    HelloModule, 
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGODB_URL as string)
   ],
   controllers: [AppController],
   providers: [AppService],
